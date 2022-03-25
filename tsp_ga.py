@@ -42,7 +42,7 @@ def selectionProcess(popRanked, eliteSize):
 
 def matingPool(population, selectionResults):
     matingPool = []
-    for i in range(0):
+    for i in range(0, len(selectionResults)):
         index = selectionResults[i]
         matingPool.append(population[index])
     return matingPool
@@ -147,7 +147,7 @@ def createPopulation():
 
 def main():
     cities = createPopulation()
-    geneticAlgorithm(population=cities, popSize=15, eliteSize=10, mutationRate=0.01, generations=500)
-    #geneticAlgorithmPlot(population=cities, popSize=15, eliteSize=10, mutationRate=0.01, generations=500)
+    #geneticAlgorithm(population=cities, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
+    geneticAlgorithmPlot(population=cities, popSize=15, eliteSize=10, mutationRate=0.01, generations=500)
 
 main()
