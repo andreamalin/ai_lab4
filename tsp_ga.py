@@ -1,3 +1,5 @@
+# Referencia de: https://towardsdatascience.com/evolution-of-a-salesman-a-complete-genetic-algorithm-tutorial-for-python-6fe5d2b3ca35
+
 from TSP_Classes.City import City
 from TSP_Classes.Fitness import Fitness
 import numpy as np
@@ -106,7 +108,8 @@ def nextGeneration(currentGen, eliteSize, mutationRate):
     nextGeneration = mutatePopulation(children, mutationRate)
     return nextGeneration
 
-def geneticAlgorithm(population, popSize, eliteSize, mutationRate, generations): #Este no grafica
+#  PLOT TSP
+def geneticAlgorithm(population, popSize, eliteSize, mutationRate, generations):
     pop = initialPopulation(popSize, population)
     print("Initial distance: " + str(1 / routeOrdering(pop)[0][1]))
     
@@ -116,9 +119,21 @@ def geneticAlgorithm(population, popSize, eliteSize, mutationRate, generations):
     print("Final distance: " + str(1 / routeOrdering(pop)[0][1]))
     bestRouteIndex = routeOrdering(pop)[0][0]
     bestRoute = pop[bestRouteIndex]
-    return bestRoute
 
-def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generations): #Este grafica
+    plot_tour(bestRoute)
+
+def plot_tour(cities):
+    for i in range(len(cities)):
+        x0, y0 = cities[i-1].x, cities[i-1].y
+        x1, y1 = cities[i].x, cities[i].y
+        plt.scatter(int(x0), int(y0), s=15, c='r')
+        plt.annotate(i + 1, (int(x0), int(y0)))
+        plt.plot([x1, x0], [y1, y0], c='b')         
+
+    plt.show()
+
+
+def geneticAlgorithmPlot(population, popSize, eliteSize, mutationRate, generations):
     pop = initialPopulation(popSize, population)
     progress = []
     progress.append(1 / routeOrdering(pop)[0][1])
@@ -147,7 +162,10 @@ def createPopulation():
 
 def main():
     cities = createPopulation()
-    #geneticAlgorithm(population=cities, popSize=100, eliteSize=20, mutationRate=0.01, generations=500)
+
+    # Ruta
+    geneticAlgorithm(population=cities, popSize=15, eliteSize=10, mutationRate=0.01, generations=500)
+    # Performance
     geneticAlgorithmPlot(population=cities, popSize=15, eliteSize=10, mutationRate=0.01, generations=500)
 
 main()
